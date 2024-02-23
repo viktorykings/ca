@@ -1,6 +1,6 @@
 import Calculator from '../Calculator';
 import Sum from '../commands/Sum';
-import {PowerOfNum} from '../commands/PowerOfNum';
+import {PowerOfNum, tenInPowerX} from '../commands/PowerOfNum';
 
 test('square num: 2 ** 2 = 4', () => {
     const calculator = new Calculator()
@@ -49,4 +49,18 @@ test('x in power y: 2 ** 5 = 27', () => {
     expect(calculator.val).toBe(32);
     calculator.undo()
     expect(calculator.val).toBe(2);
+});
+test('10 in power x: 10 ** 2 = 100', () => {
+    const calculator = new Calculator()
+    calculator.executeCommand(new tenInPowerX(2))
+    expect(calculator.val).toBe(100);
+    calculator.undo()
+    expect(calculator.val).toBe(10);
+});
+test('10 in power x: 10 ** 4 = 10000', () => {
+    const calculator = new Calculator()
+    calculator.executeCommand(new tenInPowerX(4))
+    expect(calculator.val).toBe(10000);
+    calculator.undo()
+    expect(calculator.val).toBe(10);
 });
