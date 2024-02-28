@@ -5,12 +5,11 @@ export default class Calculator {
     }
     setValue(num){
         this.val = num
-        console.log('in set value method: ', this.val)
+        // console.log('in set value method: ', this.val)
     }
 
     executeCommand(command) {
         this.val = command.execute(this.val)
-        console.log(this.val)
         this.history.push(command)
     }
     undo() {
