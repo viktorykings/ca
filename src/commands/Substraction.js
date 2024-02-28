@@ -1,4 +1,4 @@
-export default class Subtraction {
+export default class Substraction {
   constructor(valToSubstract) {
     this.valToSubstract = valToSubstract;
   }

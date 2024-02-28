@@ -1,12 +1,12 @@
 import Calculator from '../Calculator';
-import Subtraction from '../commands/Subtraction';
+import Substraction from '../commands/Substraction';
 import Sum from '../commands/Sum';
 import SighChange from '../commands/SighChange';
 
 
 test('sign change: -2 -> 2', () => {
     const calculator = new Calculator()
-    calculator.executeCommand(new Subtraction(2))
+    calculator.executeCommand(new Substraction(2))
     calculator.executeCommand(new SighChange())
     expect(calculator.val).toBe(2);
     calculator.undo()
