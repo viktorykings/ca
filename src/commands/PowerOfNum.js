@@ -1,27 +1,41 @@
 export class PowerOfNum {
     constructor(power) {
         this.power = power
-        this.prevVal
     }
     execute(currVal) {
-        this.prevVal = currVal
+        console.log(this.power, currVal)
         return currVal ** this.power
-    }
-    undo() {
-        return this.prevVal
     }
 }
 
+export class PowerOfTwo extends PowerOfNum {
+    constructor(value, power) {
+        super(power)
+        this.power = 2
+        this.value = value
+    }
+    execute() {
+        return this.value ** this.power
+    }
+
+}
+export class PowerOfThree extends PowerOfNum {
+    constructor(value, power) {
+        super(power)
+        this.power = 3
+        this.value = value
+    }
+
+    execute() {
+        return this.value ** this.power
+    }
+}
 export class tenInPowerX extends PowerOfNum {
-    constructor(power, prevVal) {
-        super(power, prevVal)
+    constructor(power) {
+        super(power)
         this.value = 10
     }
     execute() {
-        this.prevVal = this.value
         return this.value ** this.power
-    }
-    undo() {
-        return this.prevVal
     }
 }

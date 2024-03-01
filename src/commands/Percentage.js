@@ -5,7 +5,6 @@ export default class Percentage {
     }
 
     execute(currVal) {
-        console.log('percent rate',this.percent, 'koef:' , this.valToCountPercent / this.percent, 'curr val:', currVal, 'valToCountPercent', this.valToCountPercent)
         if(currVal == 0) return currVal;
         return this.valToCountPercent / this.percent
     }
