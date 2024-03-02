@@ -11,6 +11,7 @@ import OneDivideByX from "./commands/OneDivideByX";
 import Factorial from "./commands/Factorial";
 import { OPERATIONS, numbers } from './const';
 import './style.css'
+import { MemoryAdd, MemoryClear, MemorySubstract, MemoryRecall } from "./commands/Memory";
 const btns = document.getElementById('numBoard');
 const resultPlace = document.getElementById('currentVal')
 const sequencePlace = document.getElementById('sequence')
@@ -33,9 +34,13 @@ const commands = new Map([
     [OPERATIONS.yRoot, RootOfNum],
     [OPERATIONS.OneDivideByX, OneDivideByX],
     [OPERATIONS.factorial, Factorial],
+    [OPERATIONS.mc, MemoryClear],
+    [OPERATIONS.mr, MemoryRecall],
+    [OPERATIONS.mPlus, MemoryAdd],
+    [OPERATIONS.mMinus, MemorySubstract],
 ])
-
-const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX, OPERATIONS.factorial]
+const memoryOPerators = [OPERATIONS.mc, OPERATIONS.mr, OPERATIONS.mPlus, OPERATIONS.mMinus]
+const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX, OPERATIONS.factorial]
 const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy, OPERATIONS.yRoot]
 
 let a = 0
@@ -43,23 +48,20 @@ let operator = 0
 let b = 0
 let isCompleted = false
 let shouldCalculate = false
-
 function invokeCommand(e) {
+
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
     }
     if (a && b && shouldCalculate) {
         const command = commands.get(operator)
         calculator.executeCommand(new command(+b))
-        // console.log('triggered command:', commands.get(operator), calculator.val, a, b)
         b = 0
         isCompleted = true
         resultPlace.value = calculator.val
         sequencePlace.value = calculator.val
-        a=calculator.val
-
+        a = calculator.val
         shouldCalculate = false
-        console.log("two oper",+a,+b, calculator.val, operator)
     }
 
     if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
@@ -80,7 +82,7 @@ function invokeCommand(e) {
 
     if (oneOperandOperators.includes(e.target.value)) {
         operator = 0
-        a=calculator.val
+        a = calculator.val
         resultPlace.value = calculator.val
         sequencePlace.value = calculator.val
         isCompleted = true
@@ -92,9 +94,21 @@ function invokeCommand(e) {
             b = calculator.val * a
             calculator.setValue(+a)
         } else calculator.executeCommand(new Command(+a))
-        console.log("one oper",+a,+b, calculator.val, operator)
 
     }
+    if (memoryOPerators.includes(e.target.value)) {
+        const Command = commands.get(e.target.value)
+        if (e.target.value === OPERATIONS.mr) {
+            calculator.executeMemoryCommand(new Command(calculator.memory))
+            calculator.setValue(calculator.memory)
+        } else calculator.executeMemoryCommand(new Command(+a))
+        operator = 0
+        a=calculator.val
+        resultPlace.value = calculator.val
+        sequencePlace.value = calculator.val
+        isCompleted = true
+    }
+
 
     if (e.target.value === OPERATIONS.ac) {
         calculator.setValue(0)

@@ -19,7 +19,7 @@ export const OPERATIONS = {
     squareRoot:"squareRoot",
     cubeRoot:"cubeRoot",
     yRoot: "yRoot",
-    factorial: "x!"
+    factorial: "x!",
 };
 
 export const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
