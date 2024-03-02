@@ -3,36 +3,30 @@ export class RootOfNum {
         this.val = val
     }
     execute(power) {
-        let root
-        for (let i = 0; i <= power; i++) {
-            if (i ** power === this.val) root = i;
-        }
-        return root
+        if(this.val < 0) return 'Error'
+        return this.val ** (1/power)
     }
 }
 
 class Root {
-    constructor(power){
+    constructor(power) {
         this.power = power
     }
 
-    execute(currVal){
-        let root
-        for(let i = 0; i <= currVal; i++){
-            if(i ** this.power === currVal) root = i
-        }
-        return root
+    execute(currVal) {
+        if(currVal < 0) return 'Error'
+        return currVal ** (1/this.power)
     }
 }
 
-export class SquareRoot extends Root{
-    constructor(power){
+export class SquareRoot extends Root {
+    constructor(power) {
         super(power)
         this.power = 2
     }
 }
-export class CubeRoot extends Root{
-    constructor(power){
+export class CubeRoot extends Root {
+    constructor(power) {
         super(power)
         this.power = 3
     }

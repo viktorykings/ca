@@ -124,4 +124,3 @@ function invokeCommand(e) {
     resultPlace.value = calculator.val
 }
 btns.addEventListener('click', (e) => invokeCommand(e))
-
