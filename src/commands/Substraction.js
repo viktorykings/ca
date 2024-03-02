@@ -6,8 +6,4 @@ export default class Substraction {
   execute(currVal) {
     return currVal - this.valToSubstract;
   }
-
-  undo(currVal) {
-    return currVal + this.valToSubstract;
-  }
 }

@@ -6,8 +6,4 @@ export default class Divide {
   execute(currVal) {
     return currVal / this.valToDivide;
   }
-
-  undo(currVal) {
-    return currVal * this.valToDivide;
-  }
 }

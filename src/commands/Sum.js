@@ -6,8 +6,4 @@ export default class Sum {
   execute(currVal) {
     return currVal + this.valToAdd;
   }
-
-  undo(currVal) {
-    return currVal - this.valToAdd;
-  }
 }

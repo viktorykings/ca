@@ -8,6 +8,7 @@ import Percentage from "./commands/Percentage";
 import { PowerOfNum, tenInPowerX, PowerOfTwo, PowerOfThree } from "./commands/PowerOfNum";
 import { RootOfNum, SquareRoot, CubeRoot } from "./commands/RootOfNum";
 import OneDivideByX from "./commands/OneDivideByX";
+import Factorial from "./commands/Factorial";
 import { OPERATIONS, numbers } from './const';
 import './style.css'
 const btns = document.getElementById('numBoard');
@@ -31,9 +32,10 @@ const commands = new Map([
     [OPERATIONS.cubeRoot, CubeRoot],
     [OPERATIONS.yRoot, RootOfNum],
     [OPERATIONS.OneDivideByX, OneDivideByX],
+    [OPERATIONS.factorial, Factorial],
 ])
 
-const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX]
+const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX, OPERATIONS.factorial]
 const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy, OPERATIONS.yRoot]
 
 let a = 0
@@ -48,14 +50,16 @@ function invokeCommand(e) {
     }
     if (a && b && shouldCalculate) {
         const command = commands.get(operator)
-        // if(operator === OPERATIONS.yRoot)  calculator.executeCommand(new command(+a))
         calculator.executeCommand(new command(+b))
-        console.log('triggered command:', commands.get(operator), calculator.val, a, b)
+        // console.log('triggered command:', commands.get(operator), calculator.val, a, b)
         b = 0
         isCompleted = true
         resultPlace.value = calculator.val
         sequencePlace.value = calculator.val
+        a=calculator.val
+
         shouldCalculate = false
+        console.log("two oper",+a,+b, calculator.val, operator)
     }
 
     if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
@@ -75,6 +79,12 @@ function invokeCommand(e) {
     }
 
     if (oneOperandOperators.includes(e.target.value)) {
+        operator = 0
+        a=calculator.val
+        resultPlace.value = calculator.val
+        sequencePlace.value = calculator.val
+        isCompleted = true
+
         const Command = commands.get(e.target.value)
 
         if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
@@ -82,6 +92,7 @@ function invokeCommand(e) {
             b = calculator.val * a
             calculator.setValue(+a)
         } else calculator.executeCommand(new Command(+a))
+        console.log("one oper",+a,+b, calculator.val, operator)
 
     }
 

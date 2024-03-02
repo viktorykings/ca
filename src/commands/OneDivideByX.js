@@ -7,8 +7,4 @@ export default class OneDivideByX {
     execute() {
       return this.valToDivide / this.valToDivideBy;
     }
-  
-    undo() {
-      return this.valToDivide * this.valToDivideBy;
-    }
   }

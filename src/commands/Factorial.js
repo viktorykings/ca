@@ -10,8 +10,4 @@ export default class Factorial{
         }
         return val;
       }
-    
-      undo() {
-        return this.factorialVal;
-      }
 }

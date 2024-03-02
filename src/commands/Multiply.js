@@ -6,8 +6,4 @@ export default class Multiply {
   execute(currVal) {
     return currVal * this.valToMult;
   }
-
-  undo(currVal) {
-    return currVal / this.valToMult;
-  }
 }

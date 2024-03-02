@@ -9,21 +9,15 @@ test('sign change: -2 -> 2', () => {
     calculator.executeCommand(new Substraction(2))
     calculator.executeCommand(new SighChange())
     expect(calculator.val).toBe(2);
-    calculator.undo()
-    expect(calculator.val).toBe(-2);
 });
 test('sign change: 2 -> -2', () => {
     const calculator = new Calculator()
     calculator.executeCommand(new Sum(2))
     calculator.executeCommand(new SighChange())
     expect(calculator.val).toBe(-2);
-    calculator.undo()
-    expect(calculator.val).toBe(2);
 });
 test('sign change: 0 doesnt change sign', () => {
     const calculator = new Calculator()
     calculator.executeCommand(new SighChange())
-    expect(calculator.val).toBe(0);
-    calculator.undo()
     expect(calculator.val).toBe(0);
 });

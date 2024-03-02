@@ -6,9 +6,4 @@ export default class SighChange {
         if(currVal == 0) return currVal;
         return currVal * this.sign
     }
-
-    undo(currVal) {
-        if(currVal == 0) return currVal;
-        return currVal * this.sign;
-    }
 }

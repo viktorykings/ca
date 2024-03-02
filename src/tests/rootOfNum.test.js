@@ -4,25 +4,19 @@ import {SquareRoot, CubeRoot, RootOfNum} from '../commands/RootOfNum';
 
 test('root num:  sqrt(4) = 2', () => {
     const calculator = new Calculator()
-    calculator.executeCommand(new Sum(4))
-    calculator.executeCommand(new RootOfNum(2))
+    calculator.setValue(4)
+    calculator.executeCommand(new SquareRoot())
     expect(calculator.val).toBe(2);
-    calculator.undo()
-    expect(calculator.val).toBe(4);
 });
 test('root num:  cube(27) = 3', () => {
     const calculator = new Calculator()
-    calculator.executeCommand(new Sum(27))
-    calculator.executeCommand(new RootOfNum(3))
+    calculator.setValue(27)
+    calculator.executeCommand(new CubeRoot())
     expect(calculator.val).toBe(3);
-    calculator.undo()
-    expect(calculator.val).toBe(27);
 });
 test('root num:  root x(32) = 2', () => {
     const calculator = new Calculator()
-    calculator.executeCommand(new Sum(32))
-    calculator.executeCommand(new RootOfNum(5))
+    calculator.setValue(5)
+    calculator.executeCommand(new RootOfNum(32))
     expect(calculator.val).toBe(2);
-    calculator.undo()
-    expect(calculator.val).toBe(32);
 });

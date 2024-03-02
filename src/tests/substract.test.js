@@ -8,8 +8,6 @@ test('substraction 5 - 2 to equal 3', () => {
     calculator.executeCommand(new Sum(5))
     calculator.executeCommand(new Substraction(2))
     expect(calculator.val).toBe(3);
-    calculator.undo()
-    expect(calculator.val).toBe(5);
 });
 test('substraction negative: -2 - -3 to equal 1', () => {
     const calculator = new Calculator()
@@ -18,8 +16,6 @@ test('substraction negative: -2 - -3 to equal 1', () => {
     calculator.executeCommand(new Substraction(-3))
     calculator.val
     expect(calculator.val).toBe(1);
-    calculator.undo()
-    expect(calculator.val).toBe(-2);
 });
 test('substraction negative and positive -5 - 2 to equal -2', () => {
     const calculator = new Calculator()
@@ -27,6 +23,4 @@ test('substraction negative and positive -5 - 2 to equal -2', () => {
     expect(calculator.val).toBe(-5);
     calculator.executeCommand(new Substraction(2))
     expect(calculator.val).toBe(-7);
-    calculator.undo()
-    expect(calculator.val).toBe(-5);
 });

@@ -8,9 +8,4 @@ export default class Percentage {
         if(currVal == 0) return currVal;
         return this.valToCountPercent / this.percent
     }
-
-    undo(currVal) {
-        if(currVal == 0) return currVal;
-        return this.valToCountPercent * this.percent
-    }
   }
