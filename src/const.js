@@ -15,6 +15,10 @@ export const OPERATIONS = {
     x3: "x3",
     xy: "xy",
     tenInPowerX: "10x",
+    OneDivideByX: "1/x",
+    squareRoot:"squareRoot",
+    cubeRoot:"cubeRoot",
+    yRoot: "yRoot"
 };
 
 export const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];

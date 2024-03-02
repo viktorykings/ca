@@ -6,6 +6,8 @@ import Divide from "./commands/Divide";
 import SighChange from "./commands/SighChange";
 import Percentage from "./commands/Percentage";
 import { PowerOfNum, tenInPowerX, PowerOfTwo, PowerOfThree } from "./commands/PowerOfNum";
+import { RootOfNum, SquareRoot, CubeRoot } from "./commands/RootOfNum";
+import OneDivideByX from "./commands/OneDivideByX";
 import { OPERATIONS, numbers } from './const';
 import './style.css'
 const btns = document.getElementById('numBoard');
@@ -25,21 +27,18 @@ const commands = new Map([
     [OPERATIONS.tenInPowerX, tenInPowerX],
     [OPERATIONS.oppositeSign, SighChange],
     [OPERATIONS.percentage, Percentage],
+    [OPERATIONS.squareRoot, SquareRoot],
+    [OPERATIONS.cubeRoot, CubeRoot],
+    [OPERATIONS.yRoot, RootOfNum],
+    [OPERATIONS.OneDivideByX, OneDivideByX],
 ])
-// операции с одним числом и двумя разделить
-// х в степени у подвязать к а и б
-const basicOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy]
-const restOperators = [OPERATIONS.equal, OPERATIONS.ac, OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus]
-const instantlyInvokingOperators = [OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX]
 
-const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX]
-const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy]
+const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.mr, OPERATIONS.mc, OPERATIONS.mPlus, OPERATIONS.mMinus, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX]
+const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy, OPERATIONS.yRoot]
 
 let a = 0
 let operator = 0
-let instantlyInvokingOperator = 0
 let b = 0
-let power = 0
 let isCompleted = false
 let shouldCalculate = false
 
@@ -49,8 +48,9 @@ function invokeCommand(e) {
     }
     if (a && b && shouldCalculate) {
         const command = commands.get(operator)
+        // if(operator === OPERATIONS.yRoot)  calculator.executeCommand(new command(+a))
         calculator.executeCommand(new command(+b))
-        console.log('triggered command:', commands.get(operator), calculator.val, a,b)
+        console.log('triggered command:', commands.get(operator), calculator.val, a, b)
         b = 0
         isCompleted = true
         resultPlace.value = calculator.val
@@ -60,15 +60,7 @@ function invokeCommand(e) {
 
     if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
 
-    if (instantlyInvokingOperators.includes(e.target.value) && a) {
-        instantlyInvokingOperator = e.target.value
-        if (e.target.value !== OPERATIONS.xy) {
-            const Command = commands.get(instantlyInvokingOperator)
-            calculator.executeCommand(new Command(+a))
-        }
-    }
-
-    if (basicOperators.includes(e.target.value) || numbers.includes(e.target.value) || e.target.value === OPERATIONS.percentage) sequencePlace.value += e.target.value;
+    if (twoOperandOperators.includes(e.target.value) || numbers.includes(e.target.value) || e.target.value === OPERATIONS.percentage) sequencePlace.value += e.target.value;
 
     if (numbers.includes(e.target.value)) {
         if (!b && !operator) {
