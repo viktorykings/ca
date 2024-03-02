@@ -11,8 +11,11 @@ import OneDivideByX from "./commands/OneDivideByX";
 import Factorial from "./commands/Factorial";
 import { OPERATIONS, numbers } from './const';
 import './style.css'
+import themeSwitchFunc from "./theme";
 import { MemoryAdd, MemoryClear, MemorySubstract, MemoryRecall } from "./commands/Memory";
 const btns = document.getElementById('numBoard');
+const themeSwitcher = document.getElementById('themeSwitch')
+let theme = 'theme-orange'
 const resultPlace = document.getElementById('currentVal')
 const sequencePlace = document.getElementById('sequence')
 const calculator = new Calculator();
@@ -124,3 +127,6 @@ function invokeCommand(e) {
     resultPlace.value = calculator.val
 }
 btns.addEventListener('click', (e) => invokeCommand(e))
+themeSwitcher.addEventListener('click', (e) => {
+    theme = themeSwitchFunc(e, theme);
+})
