@@ -50,6 +50,20 @@ let isCompleted = false
 let shouldCalculate = false
 function invokeCommand(e) {
 
+    if (memoryOPerators.includes(e.target.value)) {
+        const Command = commands.get(e.target.value)
+        if (e.target.value === OPERATIONS.mr) {
+            calculator.executeMemoryCommand(new Command(calculator.memory))
+            if (!b) {
+                b = calculator.memory
+            } else a = calculator.memory
+        } else calculator.executeMemoryCommand(new Command(+a))
+
+        resultPlace.value = calculator.val
+        sequencePlace.value = calculator.val
+        console.log(a, b, operator)
+    }
+
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
     }
@@ -96,19 +110,6 @@ function invokeCommand(e) {
         } else calculator.executeCommand(new Command(+a))
 
     }
-    if (memoryOPerators.includes(e.target.value)) {
-        const Command = commands.get(e.target.value)
-        if (e.target.value === OPERATIONS.mr) {
-            calculator.executeMemoryCommand(new Command(calculator.memory))
-            calculator.setValue(calculator.memory)
-        } else calculator.executeMemoryCommand(new Command(+a))
-        operator = 0
-        a=calculator.val
-        resultPlace.value = calculator.val
-        sequencePlace.value = calculator.val
-        isCompleted = true
-    }
-
 
     if (e.target.value === OPERATIONS.ac) {
         calculator.setValue(0)
