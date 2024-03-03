@@ -52,7 +52,8 @@ let b = ''
 let isCompleted = false
 let shouldCalculate = false
 function invokeCommand(e) {
-    if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
+    if(e.target.value === '.') a = 0
+    if(!a && e.target.value === '-') a = e.target.value
 
     if (memoryOPerators.includes(e.target.value)) {
         const Command = commands.get(e.target.value)
@@ -68,14 +69,11 @@ function invokeCommand(e) {
     }
 
     if (oneOperandOperators.includes(e.target.value)) {
-        a = calculator.val
-        resultPlace.value = calculator.val
-        sequencePlace.value = calculator.val
-        isCompleted = true
-
         const Command = commands.get(e.target.value)
+
         if (!b) {
             calculator.executeCommand(new Command(+a))
+            a = calculator.val
         } else {
             calculator.executeCommand(new Command(+b))
             if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
@@ -83,6 +81,9 @@ function invokeCommand(e) {
             } else  b = calculator.val
             calculator.setValue(+a)
         }
+        resultPlace.value = calculator.val
+        isCompleted = true
+
     }
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
@@ -90,6 +91,7 @@ function invokeCommand(e) {
     if (a && b && shouldCalculate) {
         const command = commands.get(operator)
         calculator.executeCommand(new command(+b))
+        console.log(calculator.val, operator, shouldCalculate)
         b = ''
         operator = ''
         isCompleted = true
@@ -98,6 +100,8 @@ function invokeCommand(e) {
         a = calculator.val
         shouldCalculate = false
     }
+    if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
+
     if (numbers.includes(e.target.value)) {
 
         if (!b && !operator) {
@@ -123,7 +127,7 @@ function invokeCommand(e) {
         isCompleted = false
         shouldCalculate = false
     }
-    resultPlace.value = calculator.val
+    // resultPlace.value = calculator.val
 }
 btns.addEventListener('click', (e) => invokeCommand(e))
 themeSwitcher.addEventListener('click', (e) => {
