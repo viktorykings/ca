@@ -83,8 +83,6 @@ function invokeCommand(e) {
             } else  b = calculator.val
             calculator.setValue(+a)
         }
-
-        console.log(a,b,calculator.val, operator)
     }
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
