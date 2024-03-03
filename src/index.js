@@ -80,9 +80,11 @@ function invokeCommand(e) {
             calculator.executeCommand(new Command(+b))
             if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
                 b = calculator.val * a
-                calculator.setValue(+a)
-            } else  b = a
+            } else  b = calculator.val
+            calculator.setValue(+a)
         }
+
+        console.log(a,b,calculator.val, operator)
     }
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
