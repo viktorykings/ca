@@ -6,6 +6,7 @@ export default class Percentage {
 
     execute(currVal) {
         if(currVal == 0) return currVal;
+        console.log('fron percentage class:', 'current:', currVal, "val to count perecnt:", this.valToCountPercent, this.valToCountPercent / this.percent)
         return this.valToCountPercent / this.percent
     }
   }

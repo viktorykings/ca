@@ -46,12 +46,13 @@ const memoryOPerators = [OPERATIONS.mc, OPERATIONS.mr, OPERATIONS.mPlus, OPERATI
 const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX, OPERATIONS.factorial]
 const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy, OPERATIONS.yRoot]
 
-let a = 0
-let operator = 0
-let b = 0
+let a = ''
+let operator = ''
+let b = ''
 let isCompleted = false
 let shouldCalculate = false
 function invokeCommand(e) {
+    if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
 
     if (memoryOPerators.includes(e.target.value)) {
         const Command = commands.get(e.target.value)
@@ -64,28 +65,41 @@ function invokeCommand(e) {
 
         resultPlace.value = calculator.val
         sequencePlace.value = calculator.val
-        console.log(a, b, operator)
     }
 
+    if (oneOperandOperators.includes(e.target.value)) {
+        a = calculator.val
+        resultPlace.value = calculator.val
+        sequencePlace.value = calculator.val
+        isCompleted = true
+
+        const Command = commands.get(e.target.value)
+        if (!b) {
+            calculator.executeCommand(new Command(+a))
+        } else {
+            calculator.executeCommand(new Command(+b))
+            if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
+                b = calculator.val * a
+                calculator.setValue(+a)
+            } else  b = a
+        }
+    }
     if (a && operator && b && !numbers.includes(e.target.value)) {
         shouldCalculate = true
     }
     if (a && b && shouldCalculate) {
         const command = commands.get(operator)
         calculator.executeCommand(new command(+b))
-        b = 0
+        b = ''
+        operator = ''
         isCompleted = true
         resultPlace.value = calculator.val
         sequencePlace.value = calculator.val
         a = calculator.val
         shouldCalculate = false
     }
-
-    if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
-
-    if (twoOperandOperators.includes(e.target.value) || numbers.includes(e.target.value) || e.target.value === OPERATIONS.percentage) sequencePlace.value += e.target.value;
-
     if (numbers.includes(e.target.value)) {
+
         if (!b && !operator) {
             a += e.target.value
             calculator.setValue(+a)
@@ -95,32 +109,17 @@ function invokeCommand(e) {
         } else {
             b += e.target.value
         }
-    }
-
-    if (oneOperandOperators.includes(e.target.value)) {
-        operator = 0
-        a = calculator.val
-        resultPlace.value = calculator.val
-        sequencePlace.value = calculator.val
-        isCompleted = true
-
-        const Command = commands.get(e.target.value)
-
-        if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
-            calculator.executeCommand(new Command(+b))
-            b = calculator.val * a
-            calculator.setValue(+a)
-        } else calculator.executeCommand(new Command(+a))
 
     }
+    sequencePlace.value = `${a}${operator}${b}`;
 
     if (e.target.value === OPERATIONS.ac) {
         calculator.setValue(0)
         resultPlace.value = ''
         sequencePlace.value = ''
-        operator = 0
-        a = 0
-        b = 0
+        operator = ''
+        a = ''
+        b = ''
         isCompleted = false
         shouldCalculate = false
     }
