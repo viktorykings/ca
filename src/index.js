@@ -19,7 +19,6 @@ let theme = 'theme-orange'
 const resultPlace = document.getElementById('currentVal')
 const sequencePlace = document.getElementById('sequence')
 const calculator = new Calculator();
-console.log('initial:', calculator.val)
 
 const commands = new Map([
     [OPERATIONS.sum, Sum],
@@ -51,6 +50,7 @@ let operator = ''
 let b = ''
 let isCompleted = false
 let shouldCalculate = false
+
 function invokeCommand(e) {
     if(e.target.value === '.') a = 0
     if(!a && e.target.value === '-') a = e.target.value
@@ -61,6 +61,7 @@ function invokeCommand(e) {
             calculator.executeMemoryCommand(new Command(calculator.memory))
             if (!b) {
                 b = calculator.memory
+                shouldCalculate = true
             } else a = calculator.memory
         } else calculator.executeMemoryCommand(new Command(+a))
 
@@ -85,13 +86,12 @@ function invokeCommand(e) {
         isCompleted = true
 
     }
-    if (a && operator && b && !numbers.includes(e.target.value)) {
+    if (a && operator && b !== '' && !numbers.includes(e.target.value)) {
         shouldCalculate = true
     }
-    if (a && b && shouldCalculate) {
+    if (a && b !== '' && shouldCalculate) {
         const command = commands.get(operator)
         calculator.executeCommand(new command(+b))
-        console.log(calculator.val, operator, shouldCalculate)
         b = ''
         operator = ''
         isCompleted = true
@@ -127,7 +127,6 @@ function invokeCommand(e) {
         isCompleted = false
         shouldCalculate = false
     }
-    // resultPlace.value = calculator.val
 }
 btns.addEventListener('click', (e) => invokeCommand(e))
 themeSwitcher.addEventListener('click', (e) => {
