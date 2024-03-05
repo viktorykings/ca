@@ -2,6 +2,7 @@ module.exports = {
     env: {
       browser: true,
       es2021: true,
+      jest: true
     },
     extends: [
       'airbnb-base',
@@ -28,6 +29,9 @@ module.exports = {
     rules: {
       "semi": ["error", "always"],
       "quotes": ["error", "double"],
+      "no-underscore-dangle": ["error", {"allow": ["foo_", "_toFixedWithoutZeros"]}],
+      "class-methods-use-this": ["error", { "exceptMethods": ["_toFixedWithoutZeros"] }],
+      "max-classes-per-file": ["error", 5],
       'prettier/prettier': [
         'error',
         {

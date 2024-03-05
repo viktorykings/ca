@@ -1,5 +1,16 @@
-import { OPERATIONS, numbers, oneOperandOperators, twoOperandOperators, memoryOPerators } from "./const";
-const operators = [...oneOperandOperators, ...twoOperandOperators, ...memoryOPerators]
+import {
+  OPERATIONS,
+  numbers,
+  oneOperandOperators,
+  twoOperandOperators,
+  memoryOPerators,
+} from "./const";
+
+const operators = [
+  ...oneOperandOperators,
+  ...twoOperandOperators,
+  ...memoryOPerators,
+];
 
 const isTargetKey = (e) => {
   return (
@@ -7,7 +18,7 @@ const isTargetKey = (e) => {
     operators.includes(e.key) ||
     e.key === OPERATIONS.equal ||
     e.key === "Enter" ||
-    e.key === 'Delete'
+    e.key === "Delete"
   );
 };
 
@@ -21,7 +32,7 @@ export function activeBtn(e) {
   }
 }
 export function unactiveBtn(e) {
-  if (!e.shiftKey && isTargetKey(e) || e.key === '+') {
+  if ((!e.shiftKey && isTargetKey(e)) || e.key === "+") {
     const btn = document.querySelector(".active");
     btn.classList.remove("active");
   }
