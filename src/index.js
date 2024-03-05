@@ -9,10 +9,11 @@ import { PowerOfNum, tenInPowerX, PowerOfTwo, PowerOfThree } from "./commands/Po
 import { RootOfNum, SquareRoot, CubeRoot } from "./commands/RootOfNum";
 import OneDivideByX from "./commands/OneDivideByX";
 import Factorial from "./commands/Factorial";
-import { OPERATIONS, numbers } from './const';
+import { OPERATIONS, numbers, oneOperandOperators, twoOperandOperators, memoryOPerators } from './const';
 import './style.css'
 import themeSwitchFunc from "./theme";
 import { MemoryAdd, MemoryClear, MemorySubstract, MemoryRecall } from "./commands/Memory";
+import {unactiveBtn, activeBtn} from './keyboardHandlers'
 const btns = document.getElementById('numBoard');
 const themeSwitcher = document.getElementById('themeSwitch')
 let theme = 'theme-orange'
@@ -41,9 +42,6 @@ const commands = new Map([
     [OPERATIONS.mPlus, MemoryAdd],
     [OPERATIONS.mMinus, MemorySubstract],
 ])
-const memoryOPerators = [OPERATIONS.mc, OPERATIONS.mr, OPERATIONS.mPlus, OPERATIONS.mMinus]
-const oneOperandOperators = [OPERATIONS.oppositeSign, OPERATIONS.percentage, OPERATIONS.x2, OPERATIONS.x3, OPERATIONS.tenInPowerX, OPERATIONS.squareRoot, OPERATIONS.cubeRoot, OPERATIONS.OneDivideByX, OPERATIONS.factorial]
-const twoOperandOperators = [OPERATIONS.sum, OPERATIONS.substraction, OPERATIONS.division, OPERATIONS.multiply, OPERATIONS.xy, OPERATIONS.yRoot]
 
 let a = ''
 let operator = ''
@@ -52,12 +50,13 @@ let isCompleted = false
 let shouldCalculate = false
 
 function invokeCommand(e) {
-    if(e.target.value === '.') a = 0
-    if(!a && e.target.value === '-') a = e.target.value
+    const target = e.key ? e.key : e.target.value;
+    if (target === '.') a = 0
+    if (!a && target === '-') a = target
 
-    if (memoryOPerators.includes(e.target.value)) {
-        const Command = commands.get(e.target.value)
-        if (e.target.value === OPERATIONS.mr) {
+    if (memoryOPerators.includes(target)) {
+        const Command = commands.get(target)
+        if (target === OPERATIONS.mr) {
             calculator.executeMemoryCommand(new Command(calculator.memory))
             if (!b) {
                 b = calculator.memory
@@ -69,8 +68,8 @@ function invokeCommand(e) {
         sequencePlace.value = calculator.val
     }
 
-    if (oneOperandOperators.includes(e.target.value)) {
-        const Command = commands.get(e.target.value)
+    if (oneOperandOperators.includes(target)) {
+        const Command = commands.get(target)
 
         if (!b) {
             calculator.executeCommand(new Command(+a))
@@ -79,14 +78,14 @@ function invokeCommand(e) {
             calculator.executeCommand(new Command(+b))
             if (operator === OPERATIONS.substraction || operator === OPERATIONS.sum) {
                 b = calculator.val * a
-            } else  b = calculator.val
+            } else b = calculator.val
             calculator.setValue(+a)
         }
         resultPlace.value = calculator.val
         isCompleted = true
 
     }
-    if (a && operator && b !== '' && !numbers.includes(e.target.value)) {
+    if (a && operator && b !== '' && !numbers.includes(target)) {
         shouldCalculate = true
     }
     if (a && b !== '' && shouldCalculate) {
@@ -100,24 +99,24 @@ function invokeCommand(e) {
         a = calculator.val
         shouldCalculate = false
     }
-    if (twoOperandOperators.includes(e.target.value)) operator = e.target.value
+    if (twoOperandOperators.includes(target)) operator = target
 
-    if (numbers.includes(e.target.value)) {
+    if (numbers.includes(target)) {
 
         if (!b && !operator) {
-            a += e.target.value
+            a += target
             calculator.setValue(+a)
         } else if (a && b && isCompleted) {
-            b += e.target.value
+            b += target
             isCompleted = false
         } else {
-            b += e.target.value
+            b += target
         }
 
     }
     sequencePlace.value = `${a}${operator}${b}`;
 
-    if (e.target.value === OPERATIONS.ac) {
+    if (target === OPERATIONS.ac || e.key === "Delete") {
         calculator.setValue(0)
         resultPlace.value = ''
         sequencePlace.value = ''
@@ -127,8 +126,14 @@ function invokeCommand(e) {
         isCompleted = false
         shouldCalculate = false
     }
+    if(e.key === 'Enter') resultPlace.value = calculator.val
 }
 btns.addEventListener('click', (e) => invokeCommand(e))
 themeSwitcher.addEventListener('click', (e) => {
     theme = themeSwitchFunc(e, theme);
 })
+window.addEventListener("keydown", (e) => {
+    activeBtn(e);
+    invokeCommand(e);
+});
+window.addEventListener("keyup", unactiveBtn);
