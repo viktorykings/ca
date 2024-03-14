@@ -62,7 +62,6 @@ const commands = new Map([
 
 let a = "";
 let operator = "";
-let memoOperator = "";
 let b = "";
 let isCompleted = false;
 let shouldCalculate = false;
@@ -71,14 +70,13 @@ function invokeCommand(e) {
   const target = e.key ? e.key : e.target.value;
   if (target === ".") a = 0;
   if (!a && target === "-") a = target;
-  if (a && b && operator) shouldCalculate = true;
+  // if (a && b && operator) shouldCalculate = true;
 
   if (memoryOPerators.includes(target)) {
     const Command = commands.get(target);
     if (target === OPERATIONS.mr) {
-      memoOperator = e.target.value;
       calculator.executeMemoryCommand(new Command(calculator.memory));
-      if (a && !b && e.target.value !== memoOperator) {
+      if (a && !b ) {
         b = calculator.memory;
         shouldCalculate = true;
       } else {
@@ -141,7 +139,6 @@ function invokeCommand(e) {
     resultPlace.value = "";
     sequencePlace.value = "";
     operator = "";
-    memoOperator = "";
     a = "";
     b = "";
     isCompleted = false;
